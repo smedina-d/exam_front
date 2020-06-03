@@ -94,27 +94,27 @@
                         <div class="col-md-6">
                             <div class="form_group">
                                 <label for="">Fecha(yyyy-mm-dd)</label>
-                                <input type="text" class="form-control" name="open_date">
+                                <input type="text" class="form-control" name="open_date" id="open_date">
                             </div>
                             <div class="form_group">
                                 <label for="">Total Anterior</label>
-                                <input type="text" class="form-control" name="open_date">
+                                <input type="text" class="form-control" name="value_previous_close" id="value_previous_close">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form_group">
                                 <label for="">Hora(hh:mm)</label>
-                                <input type="text" class="form-control" name="open_date">
+                                <input type="text" class="form-control" name="hour_open" id="hour_open">
                             </div>
                             <div class="form_group">
                                 <label for="">Total Inicial</label>
-                                <input type="text" class="form-control" name="open_date">
+                                <input type="text" class="form-control" name="value_open" id="value_open">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="">Observaciones</label>
-                                <input type="textarea" class="form-control" name="open_date">
+                                <input type="textarea" class="form-control" name="observation" id="observation">
                             </div>
                         </div>
                     </div>
@@ -135,6 +135,7 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function () {
+        $('#alertNoDataCashier').css('display','none');
         /**
          * Recibir datos para apertura de caja
          *
@@ -150,6 +151,14 @@
             dataType: "json",
             success: function (data) {
                 console.log(data);
+                $('#open_date').val(res.open_date);
+                $('#hour_open').val(res.hour_open);
+                $('#value_open').val(res.value_open);
+                $('#value_previous_close').val(res.value_previous_close);
+                $('#observation').val(res.observation);
+                if(res.value_open == null) {
+                    $('#alertNoDataCashier').css('display','true');
+                }
             }
         });
 

@@ -141,6 +141,9 @@
          */
         $.ajax({
             method: 'get',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
             crossDomain: true,
             url: 'https://api.esjanus.mx/api/v1/cashier/balance',
             contentType: 'application/json',

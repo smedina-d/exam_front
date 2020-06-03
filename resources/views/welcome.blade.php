@@ -142,7 +142,7 @@
         $.ajax({
             method: 'get',
             crossDomain: true,
-            url: 'http://localhost:8001/api/v1/cashier/balance',
+            url: 'https://api.esjanus.mx/api/v1/cashier/balance',
             contentType: 'application/json',
             dataType: "json",
             success: function (data) {

@@ -151,12 +151,12 @@
             dataType: "json",
             success: function (data) {
                 console.log(data.results);
-                $('#open_date').val(data.date_open);
-                $('#hour_open').val(data.hour_open);
-                $('#value_open').val(data.value_open);
-                $('#value_previous_close').val(data.value_previous_close);
-                $('#observation').val(data.observation);
-                if(data.value_open == null) {
+                $('#open_date').val(data.results.date_open);
+                $('#hour_open').val(data.results.hour_open);
+                $('#value_open').val(data.results.value_open);
+                $('#value_previous_close').val(data.results.value_previous_close);
+                $('#observation').val(data.results.observation);
+                if(data.results.value_open == null) {
                     $('#alertNoDataCashier').css('display','true');
                 }
             }

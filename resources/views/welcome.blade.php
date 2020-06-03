@@ -150,8 +150,8 @@
             contentType: 'application/json',
             dataType: "json",
             success: function (data) {
-                console.log(data);
-                $('#open_date').val(data.open_date);
+                console.log(data.results);
+                $('#open_date').val(data.date_open);
                 $('#hour_open').val(data.hour_open);
                 $('#value_open').val(data.value_open);
                 $('#value_previous_close').val(data.value_previous_close);

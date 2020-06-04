@@ -229,6 +229,24 @@
 </script>
 <script>
     $(document).ready(function () {
+        var maxField = 10; //Input fields increment limitation
+        var addButton = $('.add_button'); //Add button selector
+        var wrapper = $('.field_wrapper'); //Input field wrapper
+        var fieldHTML = '<div style="border: 1px solid; margin-bottom: 5px; border-radius: 5px; border-color: #cccccc;">' +
+            '<label>Nombre</label><input type="text" class="form-control" name="nombreExpenses[]"  style="margin-left: 5px; padding-right: 5px;"/><label>Valor</label><input style="margin-left: 5px; margin-right: 5px;" type="text" class="form-control" name="valorExpenses[]"/><a href="javascript:void(0);" class="remove_button" title="Remove field"><i class="fas fa-minus-circle"></i></a>' +
+            '</div>'; //New input field html
+        var x = 1; //Initial field counter is 1
+        $(addButton).click(function () { //Once add button is clicked
+            if (x < maxField) { //Check maximum number of input fields
+                x++; //Increment field counter
+                $(wrapper).append(fieldHTML); // Add field html
+            }
+        });
+        $(wrapper).on('click', '.remove_button', function (e) { //Once remove button is clicked
+            e.preventDefault();
+            $(this).parent('div').remove(); //Remove field html
+            x--; //Decrement field counter
+        });
         /**
          * Recibir datos para apertura de caja
          *
@@ -294,29 +312,52 @@
                 }
             });
         });
+
+        $('#cerrarCaja').on('click', function () {
+
+            var dataSet = {
+                '_token':'{{ csrf_token() }}',
+                'date_close':$('#date_close').val(),
+                'hour_close':$('#hour_close').val(),
+                'value_cash':$('#value_cash').val(),
+                'value_card':$('#value_card').val(),
+                'value_transfer':$('#value_transfer').val(),
+                'other_value':$('#other_value').val(),
+                'sales_total':$('#sales_total').val(),
+                'total_cashier':$('#total_cashier').val(),
+                'total_open':$('#total_open').val(),
+                'tip_card':$('#tip_card').val(),
+                'tip_cash':$('#tip_cash').val(),
+            };
+
+            $.ajax({
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                crossDomain: true,
+                url: 'https://api.esjanus.mx/api/v1/cashier/balance/close/day',
+                contentType: 'application/json',
+                dataType: "json",
+                data: dataSet,
+                success: function (response) {
+                    console.log(response);
+                    if(response.results == 1) {
+                        Swal.fire('Caja Cerrada con éxito!');
+                    }
+                }
+            });
+
+        });
     });
 </script>
 <script>
     $(document).ready(function () {
-        var maxField = 10; //Input fields increment limitation
-        var addButton = $('.add_button'); //Add button selector
-        var wrapper = $('.field_wrapper'); //Input field wrapper
-        var fieldHTML = '<div style="border: 1px solid; margin-bottom: 5px; border-radius: 5px; border-color: #cccccc;">' +
-            '<label>Nombre</label><input type="text" class="form-control" name="nombreExpenses[]"  style="margin-left: 5px; padding-right: 5px;"/><label>Valor</label><input style="margin-left: 5px; margin-right: 5px;" type="text" class="form-control" name="valorExpenses[]"/><a href="javascript:void(0);" class="remove_button" title="Remove field"><i class="fas fa-minus-circle"></i></a>' +
-            '</div>'; //New input field html
-        var x = 1; //Initial field counter is 1
-        $(addButton).click(function () { //Once add button is clicked
-            if (x < maxField) { //Check maximum number of input fields
-                x++; //Increment field counter
-                $(wrapper).append(fieldHTML); // Add field html
-            }
-        });
-        $(wrapper).on('click', '.remove_button', function (e) { //Once remove button is clicked
-            e.preventDefault();
-            $(this).parent('div').remove(); //Remove field html
-            x--; //Decrement field counter
-        });
+
     });
+</script>
+<script>
+
 </script>
 </body>
 </html>
